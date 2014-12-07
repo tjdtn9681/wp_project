@@ -10,7 +10,7 @@ class Layout
 	public $content;
 	public $board;
 	public $sub;
-	public $title="Need Programs";
+	public $title="WEBsSNS";
 	
 	
 	public function LayoutMain()
