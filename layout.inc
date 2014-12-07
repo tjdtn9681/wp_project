@@ -1,13 +1,15 @@
 <?php
-// 세션 시작. 로그인 용
 session_start();
 ini_set("session.gc_maxlifetime", 3600);
+// 세션 시작. 로그인 용
+
 
 if(!isset($_SESSION['id']) && isset($_SESSION['permit']) )
 {
 	echo "<script>location.replace('/logout.php');</script>";
 }
 // class 이용
+
 class Layout
 {
 	public $title="WEBsSNS";
@@ -17,6 +19,7 @@ class Layout
 	public $link; 
 	public $style; 
 	public $content; 
+	public $sidecontent;
 
 	public $board;
 	private $sub; 
@@ -33,7 +36,7 @@ class Layout
 		echo "</head>\n<body>\n<div id='container'>";
 		echo	$this->LayoutHeader(); 
 		echo	$this->LayoutContent();
-		echo	$this->LayoutSide(); 
+		echo	$this->LayoutSide();
 		echo	$this->LayoutFooter();
 		echo "</div></body>\n</html>";
 	}
@@ -99,7 +102,7 @@ class Layout
 		{		
 			if(strpos($_SERVER['PHP_SELF'], $value)==false)
 			{
-				$thismenu = $thismenu."<li><a href='/".$value."'>".$key."</a></li>";
+				$thismenu = $thismenu."<li><a href='/".$value."/?id=".$_SESSION['id']."'>".$key."</a></li>";
 			} else
 			{
 				$thismenu = $thismenu."<li><b style='border-bottom:4px solid green;'>".$key."</b></li>";
@@ -113,7 +116,8 @@ class Layout
 		{
 			if(strpos($_SERVER['PHP_SELF'], "login.php"))
 			{
-				$this->login="<b style='border-bottom:3px solid #90bbff;'>Login</b>";
+				$this->login="<a href='/registi.php'>Join </a> <a href='/login.php'>Login</a>";
+				
 			} else
 			{
 				$this->login="<a href='/registi.php'>Join </a> <a href='/login.php'>Login</a>";
@@ -144,19 +148,13 @@ class Layout
 				{
 					case 1 : echo "일반회원";
 					break;
-					case 2 : echo "회원";
-						break;
-					case 3 : echo "관리자";
+					case 2 : echo "관리자";
 						break;
 				}
 				echo "</b><b style='padding:20px;'>".$_SESSION['id']."</b></div>";
 			}
-			echo "<h3 style='margin: 5px 0 10px 0;text-align:center;'><a href='./'>친구목록</a></h3>";
-			$this->LayoutMenu($this->pmenu, 1);
-			if($_SESSION['permit']==1)
-			{
-				echo "<div style='margin-top:20px;text-align:center;padding:15px;border:1px solid #ddd;'><a href='../write.php?bn=".$this->board[1]."' style='padding:20px;'>글</a> <a href='../admin.php' style='padding:20px;'>관리</a></div>";
-			}
+			echo "<h3 style='margin: 5px 0 10px 0;text-align:center; color:green'>친구 목록</h3>";
+
 				break;
 
 			case newsfeed : 
@@ -167,15 +165,26 @@ class Layout
 				{
 					case 1 : echo "일반회원";
 					break;
-					case 2 : echo "회원";
-						break;
-					case 3 : echo "관리자";
+					case 2 : echo "관리자";
 						break;
 				}
 				echo "</b><b style='padding:20px;'>".$_SESSION['id']."</b></div>";
 			}
-			echo "<h3 style='margin: 5px 0 10px 0;text-align:center;'><a href='./'>알림</a></h3>";
-			$this->LayoutMenu($this->bmenu, 1);
+			echo "<h3 style='margin: 5px 0 10px 0;text-align:center; color:green'>팔로워 목록</h3>";
+						
+
+	
+			
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			break;
 			
 		}
@@ -184,6 +193,7 @@ class Layout
 	{		
 		echo "<aside>";
 		$this->SideMenu();
+		echo $this->sidecontent;
 		echo "</aside></section>";
 	}
 		public function LayoutFooter(){}

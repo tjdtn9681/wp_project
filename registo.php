@@ -36,6 +36,7 @@ if(!$db->result)
 	
 } else
 {
+	header("Content-Type: text/html; charset=UTF-8");
 	echo "<script>alert('회원가입이 완료되었습니다.');location.replace('./login.php');</script>";
 	$db->DBO();
 	exit;

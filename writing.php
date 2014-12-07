@@ -6,7 +6,8 @@ $base = new Layout;
 $base->link='./style.css';
 
 $bn = $_POST['bn'];
-
+$allow = $_POST['allow'];
+$tag = $_POST['tag'];
 /**/
 
 if(($bn == 'newsfeed' || $bn == 'timeline') && $_SESSION['permit']!=1) 
@@ -86,15 +87,23 @@ if ( !$nofile ){
 
 $db = new DBC;
 $db->DBI();
+$db->query = "select no, id, friends, relation from friends where id='".$_SESSION['id']."' and friends='".$tag."' and relation='1'";
+$db->DBQ();
+$data = $db->result->fetch_row(); 
+//echo "<script>alert('".$tag."-".$data[2]."-".$data[3]."-')</script>";
+if($tag == null || $data[1] == $_SESSION['id']){
+
+$db = new DBC;
+$db->DBI();
 // query로 세션 값, id, permit 이 테이블에 존재하는지 확인
 $db->query = "select id, pass, permit from member where id='".$_SESSION['id']."' and permit=".$_SESSION['permit'];
 $db->DBQ();
 $pass = $db->result->fetch_row();
 
 if ( $nofile ) {
-$db->query = "insert into ".$bn." values(null, '".$_SESSION['id']."', '".$pass[1]."', '".date('Y-m-d')."', '".date('H:i:s')."', '".$content."', '')";
+$db->query = "insert into ".$bn." values(null, '".$_SESSION['id']."', '".$pass[1]."', '".date('Y-m-d')."', '".date('H:i:s')."', '".$content."', '', '".$tag."', '".$allow."')";
 }else{
-$db->query = "insert into ".$bn." values(null, '".$_SESSION['id']."', '".$pass[1]."', '".date('Y-m-d')."', '".date('H:i:s')."', '".$content."', '".$upfile."')";
+$db->query = "insert into ".$bn." values(null, '".$_SESSION['id']."', '".$pass[1]."', '".date('Y-m-d')."', '".date('H:i:s')."', '".$content."', '".$upfile."', '".$tag."', '".$allow."')";
 }
 $db->DBQ();
 if(!$db->result)
@@ -106,6 +115,9 @@ echo "<script>alert('글이 정상적으로 업로드 되었습니다.');locatio
 }
 $db->DBO();
 }
-
+else {
+echo "<script>alert('태그 할 수 없습니다.');history.back()</script>";
+}
+}
 $base->LayoutMain();
 ?>
