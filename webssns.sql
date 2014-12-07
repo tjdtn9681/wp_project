@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 호스트: localhost
--- 처리한 시간: 14-12-01 22:55 
+-- 처리한 시간: 14-12-01 22:55; 
 -- 서버 버전: 5.1.41
 -- PHP 버전: 5.2.12
 
@@ -12,6 +12,28 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- 데이터베이스: `webssns`
 --
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `friends`
+--
+
+CREATE TABLE IF NOT EXISTS `friends` (
+  `no` int(10) NOT NULL AUTO_INCREMENT,
+  `id` varchar(16) NOT NULL,
+  `friends` varchar(16) NOT NULL,
+  `relation` int(10) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  PRIMARY KEY (`no`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 테이블의 덤프 데이터 `friends`
+--
+
+
 
 -- --------------------------------------------------------
 
@@ -32,27 +54,6 @@ CREATE TABLE IF NOT EXISTS `member` (
 -- 테이블의 덤프 데이터 `member`
 --
 
--- --------------------------------------------------------
-
---
--- 테이블 구조 `newfeed_rep`
---
-
-CREATE TABLE IF NOT EXISTS `newfeed_rep` (
-  `no` int(10) NOT NULL AUTO_INCREMENT,
-  `board_no` int(10) NOT NULL,
-  `id` varchar(16) NOT NULL,
-  `pass` varchar(41) NOT NULL,
-  `date` date NOT NULL,
-  `time` time NOT NULL,
-  `content` text NOT NULL,
-  PRIMARY KEY (`no`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- 테이블의 덤프 데이터 `newfeed_rep`
---
-
 
 -- --------------------------------------------------------
 
@@ -68,9 +69,32 @@ CREATE TABLE IF NOT EXISTS `newsfeed` (
   `time` time NOT NULL,
   `content` text CHARACTER SET utf8 NOT NULL,
   `image` varchar(100) NOT NULL,
+  `tag` varchar(16) NOT NULL,
+  `allow` int(10) NOT NULL,
   PRIMARY KEY (`no`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- 테이블의 덤프 데이터 `newsfeed`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `newsfeed_rep`
+--
+
+CREATE TABLE IF NOT EXISTS `newsfeed_rep` (
+  `no` int(10) NOT NULL AUTO_INCREMENT,
+  `board_no` int(10) NOT NULL,
+  `id` varchar(16) NOT NULL,
+  `pass` varchar(41) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `content` text NOT NULL,
+  PRIMARY KEY (`no`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 테이블의 덤프 데이터 `newsfeed_rep`
 --
